@@ -11,7 +11,7 @@ public class SimpleMovement : CachedReferences
     [SerializeField] float rotationSpeed;
 
     [Header("//Components--------------------------------//")]
-    [SerializeField] Rigidbody rb;
+    public Rigidbody rb;
     [SerializeField] Animator animator;
     [SerializeField] Transform cameraTransform;
     [SerializeField] ParticleSystem dustPS;
