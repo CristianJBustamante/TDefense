@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class Building: MonoBehaviour
+public class Building : MonoBehaviour
 {
     public string buldingName;
     [SerializeField] protected float initHP;
@@ -14,33 +14,60 @@ public class Building: MonoBehaviour
     public int level;
     public List<BuildingUpgrade> buildingUpgrades;
 
-    public int _Level{ get=> level; set{
-        level = value;
-    }}
+    public int _Level
+    {
+        get => level; set
+        {
+            switch(value){
+                case 1:
+                    construction.SetActive(false);
+                    buildingModel.SetActive(true);
+                break;
+            }
+            level = value;
+        }
+    }
+
+    public GameObject construction;
 
     // UI Buy/Upgrade
 
     public GameObject canvas;
     public List<GameObject> horizontalPanels;
     public List<GameObject> coinsPanels;
-    public List<Image> coinsImage;
+    public List<Image> coinsImages;
+
+    private void OnTriggerEnter(Collider other){
+        if (other.TryGetComponent<HPlayer>(out HPlayer hPlayer))
+        {
+            
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.TryGetComponent<HPlayer>(out HPlayer hPlayer))
         {
-            SetCanvas();
+            if(AvailableToUnlock()) TimeWaitToDoAction(UpgradeBuilding);
         }
     }
 
     // Buy Upgrade
 
-    private void SetCanvas(){
+    private void SetCanvas()
+    {
         int coinsRequired = buildingUpgrades[level].cost;
         int activePanels = Mathf.CeilToInt(coinsRequired / 5.0f);
 
-        for(int i=0; i < activePanels; i++) horizontalPanels[i].SetActive(true);
+        for (int i = 0; i < activePanels; i++) horizontalPanels[i].SetActive(true);
         for (int i = 0; i < coinsRequired; i++) coinsPanels[i].SetActive(true);
+        canvas.gameObject.SetActive(true);
+    }
+
+    private void HideCanvas(){
+        foreach(GameObject go in horizontalPanels) go.SetActive(false);
+        foreach(GameObject go in coinsPanels) go.SetActive(false);
+        foreach(Image i in coinsImages) i.fillAmount = 0;
     }
 
     private int coinIteration = 0;
@@ -49,28 +76,33 @@ public class Building: MonoBehaviour
     {
         if (!LeanTween.isTweening(gameObject) && Mathf.Abs(HPlayer.instance.simpleMovement.rb.velocity.x) < 1)
         {
-            canvas.gameObject.SetActive(true);
-            // LeanTween.value(gameObject, 0, 1, 1).setOnUpdate((float value) => { timeImg.fillAmount = value; }).setOnComplete(() =>
-            // {
-            //     // timeImg.fillAmount = 0;
-            //     canvas.gameObject.SetActive(false);
-            // });
+            FillCoin(coinsImages[coinIteration], _action);
+            SetCanvas();
         }
-        if (HPlayer.instance.simpleMovement.rb.velocity != Vector3.zero) CancelTimeToDoAction();
+        if (HPlayer.instance.simpleMovement.rb.velocity != Vector3.zero){
+            CancelTimeToDoAction();
+            HideCanvas();
+            coinIteration = 0;
+        } 
     }
 
-    void FillCoin(Image coinImage)
+    void FillCoin(Image coinImage, Action _action)
     {
         LeanTween.value(gameObject, 0, 1, 1).setOnUpdate((float value) => { coinImage.fillAmount = value; }).setOnComplete(() =>
         {
             coinIteration++;
-            if(coinIteration < buildingUpgrades[level].cost){
-                // FillCoin();
-
-            } else{
+            if (coinIteration < buildingUpgrades[level].cost)
+            {
+                FillCoin(coinsImages[coinIteration], _action);
 
             }
-            canvas.gameObject.SetActive(false);
+            else
+            {
+                _action();
+                coinIteration = 0;
+                HideCanvas();
+                _Level++;
+            }
         });
     }
 
@@ -80,11 +112,24 @@ public class Building: MonoBehaviour
         canvas.gameObject.SetActive(false);
         LeanTween.cancel(gameObject);
     }
+
+    void UpgradeBuilding(){
+        Debug.Log("Building Upgraded");
+    }
+
+    public void UnlockNextUpgrade(){
+        buildingUpgrades[level].unlocked = true;
+    }
+
+    public bool AvailableToUnlock(){
+        return buildingUpgrades[level].unlocked;
+    }
 }
 
-[System.Serializable]
-public class BuildingUpgrade{
-    public int level;
-    public int cost;
 
+[System.Serializable]
+public class BuildingUpgrade
+{
+    public int cost;
+    public bool unlocked;
 }

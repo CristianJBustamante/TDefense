@@ -11,7 +11,7 @@ using System;
 public enum typeOfBuilding { None, House, Tower, Archery, Barracks, Castle }
 public enum typeOfGround { Grass, Dust, Sand, Water }
 public enum typeOfSurface { Flat, Route, Merge }
-public enum ModuleState { Unreachable, Locked, Unlocked, Builded }
+public enum ModuleState { Unreachable, Locked, Unlocked}
 
 public class Module : MonoBehaviour
 {
@@ -27,7 +27,6 @@ public class Module : MonoBehaviour
 
     [SerializeField] GameObject myGround;
     [SerializeField] Building myBuilding;
-    [SerializeField] GameObject construction;
 
     public ModuleState _ModuleState
     {
@@ -45,18 +44,9 @@ public class Module : MonoBehaviour
                     break;
                 case ModuleState.Unlocked:
                     SetModel(finalTypeOfGround);
-                    if (typeOfBuilding != typeOfBuilding.None) construction.SetActive(true);
-                    LeanTween.delayedCall(0.2f, () =>
-                    {
-                        ModuleManager.instance.CheckModules();
-                    });
-                    break;
-                case ModuleState.Builded:
-                    SetModel(finalTypeOfGround);
                     if (typeOfBuilding != typeOfBuilding.None)
                     {
-                        construction.SetActive(false);
-                        foreach (Building b in buildings) if (b.buldingName == typeOfBuilding.ToString()) { b.buildingModel.SetActive(true); break; }
+                        foreach (Building b in buildings) if (b.buldingName == typeOfBuilding.ToString()) { b.gameObject.SetActive(true); break; }
                     }
                     LeanTween.delayedCall(0.2f, () =>
                     {
