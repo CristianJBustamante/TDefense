@@ -13,6 +13,7 @@ public class Building : MonoBehaviour
     public GameObject buildingModel;
     public int level;
     public List<BuildingUpgrade> buildingUpgrades;
+    public Module myModule;
 
     public int _Level
     {
@@ -22,6 +23,7 @@ public class Building : MonoBehaviour
                 case 1:
                     construction.SetActive(false);
                     buildingModel.SetActive(true);
+                    myModule._ModuleState = ModuleState.Unlocked;
                 break;
             }
             level = value;
@@ -71,11 +73,15 @@ public class Building : MonoBehaviour
     }
 
     private int coinIteration = 0;
+    private bool isTweening;
 
     protected void TimeWaitToDoAction(Action _action)
     {
-        if (!LeanTween.isTweening(gameObject) && Mathf.Abs(HPlayer.instance.simpleMovement.rb.velocity.x) < 1)
+        Debug.Log("!LeanTween.isTweening(gameObject): " + !LeanTween.isTweening(gameObject));
+        Debug.Log(HPlayer.instance.simpleMovement.rb.velocity == Vector3.zero);
+        if (!isTweening && HPlayer.instance.simpleMovement.rb.velocity == Vector3.zero)
         {
+            isTweening = true;
             FillCoin(coinsImages[coinIteration], _action);
             SetCanvas();
         }
@@ -88,7 +94,7 @@ public class Building : MonoBehaviour
 
     void FillCoin(Image coinImage, Action _action)
     {
-        LeanTween.value(gameObject, 0, 1, 1).setOnUpdate((float value) => { coinImage.fillAmount = value; }).setOnComplete(() =>
+        LeanTween.value(gameObject, 0, 1, 0.5f).setOnUpdate((float value) => { coinImage.fillAmount = value; }).setOnComplete(() =>
         {
             coinIteration++;
             if (coinIteration < buildingUpgrades[level].cost)
@@ -111,6 +117,7 @@ public class Building : MonoBehaviour
         // timeImg.fillAmount = 0;
         canvas.gameObject.SetActive(false);
         LeanTween.cancel(gameObject);
+        isTweening = false;
     }
 
     void UpgradeBuilding(){
@@ -122,7 +129,7 @@ public class Building : MonoBehaviour
     }
 
     public bool AvailableToUnlock(){
-        return buildingUpgrades[level].unlocked;
+        return level >= buildingUpgrades.Count? false : buildingUpgrades[level].unlocked;
     }
 }
 

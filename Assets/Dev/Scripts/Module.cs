@@ -41,13 +41,13 @@ public class Module : MonoBehaviour
                     break;
                 case ModuleState.Locked:
                     SetModel(finalTypeOfGround);
-                    break;
-                case ModuleState.Unlocked:
-                    SetModel(finalTypeOfGround);
                     if (typeOfBuilding != typeOfBuilding.None)
                     {
                         foreach (Building b in buildings) if (b.buldingName == typeOfBuilding.ToString()) { b.gameObject.SetActive(true); break; }
                     }
+                    break;
+                case ModuleState.Unlocked:
+                    SetModel(finalTypeOfGround);
                     LeanTween.delayedCall(0.2f, () =>
                     {
                         ModuleManager.instance.CheckModules();

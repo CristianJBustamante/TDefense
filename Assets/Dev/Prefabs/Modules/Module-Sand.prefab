@@ -801,7 +801,7 @@ GameObject:
   - component: {fileID: 2491973827534886447}
   - component: {fileID: 7112616645381426194}
   m_Layer: 0
-  m_Name: Module
+  m_Name: Module-Sand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1005,8 +1005,8 @@ MonoBehaviour:
   - {fileID: 9038251403163218273}
   - {fileID: 7329155107041289373}
   typeOfBuilding: 0
-  finalTypeOfGround: 0
-  initialTypeOfGround: 0
+  finalTypeOfGround: 2
+  initialTypeOfGround: 2
   typeOfSurface: 0
   moduleState: 0
   myGround: {fileID: 7380312311584063220}
@@ -1441,6 +1441,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5515283451962975119, guid: bc2d34f41b6fa6542ad8a6f9a2045cb2, type: 3}
+      propertyPath: myModule
+      value: 
+      objectReference: {fileID: 5424676421771425731}
     - target: {fileID: 8389318590686608626, guid: bc2d34f41b6fa6542ad8a6f9a2045cb2, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1518,6 +1522,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8602406483648883448, guid: 7090aff47e54c834a9a209c8cd698345, type: 3}
+      propertyPath: myModule
+      value: 
+      objectReference: {fileID: 5424676421771425731}
     - target: {fileID: 9152073755884176467, guid: 7090aff47e54c834a9a209c8cd698345, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -3052,7 +3060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dff32008cc0bc994bae397ad029459f6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dff32008cc0bc994bae397ad029459f6, type: 3}
@@ -3972,6 +3980,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4917329012846509471, guid: 258887b7d47ff764d968d94827194079, type: 3}
+      propertyPath: myModule
+      value: 
+      objectReference: {fileID: 5424676421771425731}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 258887b7d47ff764d968d94827194079, type: 3}
 --- !u!4 &1154167178772564689 stripped
@@ -5040,6 +5052,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4809604155937399582, guid: ce717ce55ae8ba44987fa6939ed27443, type: 3}
+      propertyPath: myModule
+      value: 
+      objectReference: {fileID: 5424676421771425731}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce717ce55ae8ba44987fa6939ed27443, type: 3}
 --- !u!114 &1510249517990537922 stripped
@@ -5273,6 +5289,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3085424223799450588}
     m_Modifications:
+    - target: {fileID: 3992808251257336678, guid: 02dd67336b6fa414c9457f00df84239d, type: 3}
+      propertyPath: myModule
+      value: 
+      objectReference: {fileID: 5424676421771425731}
     - target: {fileID: 5898299190273231441, guid: 02dd67336b6fa414c9457f00df84239d, type: 3}
       propertyPath: m_Name
       value: ArcheryRange
@@ -5821,7 +5841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0b01c6feb52965f4e90ab85ed882d126, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b01c6feb52965f4e90ab85ed882d126, type: 3}
