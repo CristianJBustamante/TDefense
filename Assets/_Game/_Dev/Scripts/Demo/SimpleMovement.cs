@@ -23,6 +23,8 @@ public class SimpleMovement : CachedReferences
     Quaternion forwardRotation;
     bool acting;
 
+    public Transform transformEnemyTarget;
+
     void Awake()
     {
         if (TouchJoypadManager.Instance == null) return;
@@ -65,7 +67,8 @@ public class SimpleMovement : CachedReferences
     void FixedUpdate()
     {
         if (acting) return;
-        MyTransform.rotation = Quaternion.Slerp(MyTransform.rotation, forwardRotation, Time.deltaTime * rotationSpeed);
+        if(transformEnemyTarget == null) MyTransform.rotation = Quaternion.Slerp(MyTransform.rotation, forwardRotation, Time.deltaTime * rotationSpeed);
+        else MyTransform.rotation = Quaternion.Slerp(MyTransform.rotation, forwardRotation, Time.deltaTime * rotationSpeed);
         rb.velocity = new Vector3(Velocity.x, rb.velocity.y, Velocity.z);
     }
 
