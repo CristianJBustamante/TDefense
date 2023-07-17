@@ -40,7 +40,7 @@ public class Building : MonoBehaviour
     public List<Image> coinsImages;
 
     private void OnTriggerEnter(Collider other){
-        if (other.TryGetComponent<HPlayer>(out HPlayer hPlayer))
+        if (other.TryGetComponent<Player>(out Player player))
         {
             
         }
@@ -48,7 +48,7 @@ public class Building : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent<HPlayer>(out HPlayer hPlayer))
+        if (other.TryGetComponent<Player>(out Player player))
         {
             if(AvailableToUnlock()) TimeWaitToDoAction(UpgradeBuilding);
         }
@@ -77,15 +77,13 @@ public class Building : MonoBehaviour
 
     protected void TimeWaitToDoAction(Action _action)
     {
-        Debug.Log("!LeanTween.isTweening(gameObject): " + !LeanTween.isTweening(gameObject));
-        Debug.Log(HPlayer.instance.simpleMovement.rb.velocity == Vector3.zero);
-        if (!isTweening && HPlayer.instance.simpleMovement.rb.velocity == Vector3.zero)
+        if (!isTweening && Player.instance.rb.velocity == Vector3.zero)
         {
             isTweening = true;
             FillCoin(coinsImages[coinIteration], _action);
             SetCanvas();
         }
-        if (HPlayer.instance.simpleMovement.rb.velocity != Vector3.zero){
+        if (Player.instance.rb.velocity != Vector3.zero){
             CancelTimeToDoAction();
             HideCanvas();
             coinIteration = 0;

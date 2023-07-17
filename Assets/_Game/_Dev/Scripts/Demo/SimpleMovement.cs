@@ -48,7 +48,6 @@ public class SimpleMovement : CachedReferences
     void Update()
     {
         if(rb.velocity.magnitude < 0.1f) rb.velocity = Vector3.zero;
-        Debug.Log("rb.velocity.magnitude: " + rb.velocity.magnitude);
         
         if (acting) return;
         if (animator != null) animator.SetFloat("Speed", rb.velocity.sqrMagnitude);

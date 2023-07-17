@@ -9,6 +9,7 @@ using TMPro;
 public class Player : Character
 {
     [Header("Player Info")]
+    public static Player instance;
     public int playerLevel;
     public float maxHp;
 
@@ -41,6 +42,9 @@ public class Player : Character
     {
         base.Awake();
 
+        if(instance == null) instance = this;
+        else Destroy(this);
+
         playerLevel = SaveManager.LoadInt(playerLevelKey);
         if (playerLevel == 0) playerLevel = 1;
 
@@ -57,6 +61,8 @@ public class Player : Character
     protected override void Update()
     {
         base.Update();
+
+        if(rb.velocity.magnitude < 0.1f) rb.velocity = Vector3.zero;
 
         // ManageHP();
     }

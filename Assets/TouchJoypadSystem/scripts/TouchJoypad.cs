@@ -56,7 +56,7 @@ namespace com.Pizia.TouchJoypadSystem
         {
             if (resetOnRelease)
             {
-                //joypadEvent?.Invoke(this, Vector2.zero);
+                joypadEvent?.Invoke(this, Vector2.zero);
             }
             joypadReleased?.Invoke(this);
             isOn = false;

@@ -21,6 +21,10 @@ public class Movement : CachedReferences
 
     float mxsp;
 
+    [Header("Targeting")]
+    
+    public Transform TransformTarget;
+
     //=====================================================================================
 
 #if UNITY_EDITOR
